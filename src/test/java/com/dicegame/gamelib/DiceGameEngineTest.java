@@ -110,4 +110,29 @@ public class DiceGameEngineTest
 		gameEngine.playPlayerTurn("Player-02", mockDice); // Player 2 should not get any bonus, which means score will be same as the last roll of the dice
 		assertEquals(2, gameEngine.getPlayerScore("Player-02"), "Player gets only one turn if no bouns was scored");
 	}
+	
+	@Test
+	public void testPenaltyTurn(){
+		String[] playerNameList = {"Player-01", "Player-02"};
+		int maxPoints = 10;
+
+		DiceGameEngine gameEngine = new DiceGameEngine(playerNameList, maxPoints);
+
+		IRollingDice mockDice = new MockRollingDice();
+
+		MockRollingDice.nextScore = 1; gameEngine.playPlayerTurn("Player-01", mockDice);
+		MockRollingDice.nextScore = 1; gameEngine.playPlayerTurn("Player-02", mockDice);
+		assertTrue( ( ! gameEngine.hasPenaltyForPlayer("Player-01") ), "Penalty is not applicable with less than two turns");
+		assertTrue( ( ! gameEngine.hasPenaltyForPlayer("Player-02") ), "Penalty is not applicable with less than two turns");
+
+		MockRollingDice.nextScore = 1; gameEngine.playPlayerTurn("Player-01", mockDice); // Let player score 1 in consecutive turns
+		MockRollingDice.nextScore = 4; gameEngine.playPlayerTurn("Player-02", mockDice); // We will make player 2 score different
+		
+		// After two turns, player 1 is due for a penalty
+		assertTrue( gameEngine.hasPenaltyForPlayer("Player-01"), "Player with consecutive score of 1 should have Penalty");
+		assertTrue( ( ! gameEngine.hasPenaltyForPlayer("Player-02") ), "Penalty is not applicable with different consecutive scores from previous two turns");
+		
+		MockRollingDice.nextScore = 1; gameEngine.playPlayerTurn("Player-01", mockDice); // this turn will be skipped, becouse of previous turns
+		assertTrue( ! gameEngine.hasPenaltyForPlayer("Player-01"), "Player after serving pentaly is cleared roll dice");
+	}
 }

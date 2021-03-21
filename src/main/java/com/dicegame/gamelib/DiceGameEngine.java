@@ -129,9 +129,28 @@ public class DiceGameEngine {
 	}
 
 	public void playPlayerTurn(String playerName, IRollingDice rollingDice) {
-		// Roll the dice
-		int score = rollingDice.rollNext();
-		System.out.println("\t" + playerName + " you scored " + score + " in this turn");
+		// Check if player has to serve penalty
+		boolean isPenalty = hasPenaltyForPlayer(playerName);
+		int score = 0;
+		
+		if(isPenalty) {
+			score = 0;
+			System.out.println("\t[*] OOPS..! " + playerName + " must serve penalty due previous two consequtive turns, skipping rolling of dice..!");
+			// Score for this turn will be 0 
+		} else {
+			// Prompt to roll the dice
+			// ASSUMING if user does not confirm, player wants to skip the turn, but stays in the game
+			// if( ! isPlayerConfirmRollingDice(playerName)) {
+			// 	System.out.println(playerName + " you skipped your turn");
+			// 	return;
+			// }
+
+			// If confirms to roll, then role it, else skip the turn
+		
+			// Roll the dice
+			score = rollingDice.rollNext();
+			System.out.println("\t" + playerName + " you scored " + score + " in this turn");
+		}
 
 		int bonusScore = 0;
 		if(score == bonusOnScore){
@@ -158,6 +177,31 @@ public class DiceGameEngine {
 
 			System.out.println("\t[*] Congratulations " + playerName + " you have achieved max game points with rank of " + playerListByRank.size());
 		}
+	}
+	
+	public boolean hasPenaltyForPlayer(String playerName) {
+		boolean hasPenalty = false;
+		
+		if ( ! playerScoresMap.containsKey(playerName) ) {
+			// Still player has not played any turns
+			hasPenalty = false;
+		} else {
+			if(playerScoresMap.get(playerName).size() >= 2) {
+				// its not possible to check if player has not played at least 2 turns or rounds
+				int prevScore = playerScoresMap.get(playerName).get(playerScoresMap.get(playerName).size() - 1);
+				int lastPrevScore = playerScoresMap.get(playerName).get(playerScoresMap.get(playerName).size() - 2);
+				
+				// System.out.println(playerName + " has scores from last two rounds as " + prevScore + "," + lastPrevScore);
+				
+				if(prevScore == penaltyOnScore && lastPrevScore == penaltyOnScore) {
+					hasPenalty = true;
+				}
+			} else {
+				// not enough turns yet 
+				hasPenalty = false;
+			}
+		}
+		return hasPenalty;
 	}
 
 	void printplayerScores() {
