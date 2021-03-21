@@ -35,6 +35,6 @@ public class DiceGameApplication {
 
 		DiceGameEngine diceGame = new DiceGameEngine(playerNameList, maxGamePoints);
 		diceGame.initPlayingSequence(true); // Shuffle the player order
-		// diceGame.playGame();
+		diceGame.playGame();
 	}
 }

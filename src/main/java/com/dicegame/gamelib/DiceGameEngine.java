@@ -56,15 +56,24 @@ public class DiceGameEngine {
 	public void initPlayingSequence() {
 		initPlayingSequence(true); // by default too shuffle the players
 	}
-
-		
-	/* public void playDiceGame() {
-		
-		// Keep looping with playing turns until every one has achieved max game points
-		do {
-			
-		} while();
+	
+	public void playGame() {
+		// By default use simple rolling dice.
+		IRollingDice rollingDice = new RollingDice();
+		playGame(rollingDice);
 	}
+	
+	// This will help mock the dice for testability purposes
+	public void playGame(IRollingDice rollingDice) {
+		playNextTurn(rollingDice);
+	}
+	
+	public void playNextTurn(IRollingDice rollingDice) {
+		// play the turn of the player
+		// if completes the game, add to rank list
+	}
+
+	/* 
 	
 	public void playNextTurn() {
 		
