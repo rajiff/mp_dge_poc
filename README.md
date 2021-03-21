@@ -20,7 +20,7 @@ $ ls -l ./target/
 
 3. Run the application 
 ```unix
-$ java -jar ./target/mp_dge_poc.jar
+$ java -jar target/mp_dge_poc-1.0.0.jar
 ```
 
 4. Run test cases
