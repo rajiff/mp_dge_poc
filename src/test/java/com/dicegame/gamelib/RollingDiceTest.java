@@ -63,7 +63,7 @@ public class RollingDiceTest
 		
 		java.util.ArrayList<Integer> scoreList = new java.util.ArrayList<Integer>();
 		// Requires range of diff between min and max to at least produce min and max once, probability of getting min and max in just one or two loop not possible
-		// Less the range good, dice is only limited facess right ?
+		// Less the range good, dice is only limited faces right ?
 		for(int i=0; i< (max - min); i++) {
 			int val = dice.rollNext();
 			

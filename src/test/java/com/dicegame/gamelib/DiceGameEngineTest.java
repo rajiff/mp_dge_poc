@@ -7,6 +7,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+// For testing purpose only
+class MockRollingDice implements IRollingDice {
+	public static int nextScore = 1;
+	public int rollNext() { return MockRollingDice.nextScore; }
+}
+
 public class DiceGameEngineTest 
 {
 	@Test
@@ -25,15 +31,15 @@ public class DiceGameEngineTest
 		String[] playerNameList = {"P1", "P2", "P3", "P4", "P5", "P6"};
 		int maxPoints = 21;
 		
-		// instantitation
+		// instantiation
 		DiceGameEngine gameEngine = new DiceGameEngine(playerNameList, maxPoints);
 		
 		assertTrue(Arrays.equals(gameEngine.getPlayers(), playerNameList), "Initially Players sequence mast be same as passed to instantiation");
 		System.out.println("Original list " + Arrays.toString(playerNameList));
-		System.out.println("Insantiated list " + Arrays.toString(gameEngine.getPlayers()));
+		System.out.println("Instantiated list " + Arrays.toString(gameEngine.getPlayers()));
 		
 		gameEngine.initPlayingSequence(false); // Set playing sequence without shuffling the players
-		assertTrue(Arrays.equals(gameEngine.getPlayers(), playerNameList), "Wihtout shuffling, player sequence mast be same as passed to instantiation");
+		assertTrue(Arrays.equals(gameEngine.getPlayers(), playerNameList), "Without shuffling, player sequence mast be same as passed to instantiation");
 		System.out.println("Playing sequence list (no shuffle) " + Arrays.toString(gameEngine.getPlayers()));
 		
 		gameEngine.initPlayingSequence(true); // Shuffle the players		
@@ -46,5 +52,24 @@ public class DiceGameEngineTest
 		Arrays.sort(shuffledPlayerList);
 		Arrays.sort(playerNameList);
 	  assertTrue( (Arrays.equals(shuffledPlayerList, playerNameList)), "Players sequence must have all original players");
+	}
+	
+	@Test
+	public void testPlayPlayerTurn() {
+		String[] playerNameList = {"Player-01", "Player-02"};
+		int maxPoints = 21;
+		
+		DiceGameEngine gameEngine = new DiceGameEngine(playerNameList, maxPoints);
+		
+		IRollingDice mockDice = new MockRollingDice();
+		MockRollingDice.nextScore = 5;
+		
+		gameEngine.playPlayerTurn("Player-01", mockDice); // 1st time
+		assertEquals(MockRollingDice.nextScore, gameEngine.getPlayerScore("Player-01"), "Player score of a turn must be same as scored during that turn");
+		
+		gameEngine.playPlayerTurn("Player-01", mockDice); // 2nd time
+		gameEngine.playPlayerTurn("Player-01", mockDice); // 3rd time
+		assertEquals((MockRollingDice.nextScore*3), gameEngine.getPlayerScore("Player-01"), "Player total score must be equal to number of times dice was rolled");
+		System.out.println("Player-01 has score of " + gameEngine.getPlayerScore("Player-01"));
 	}
 }
