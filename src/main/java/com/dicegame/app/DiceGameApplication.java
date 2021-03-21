@@ -1,5 +1,7 @@
 package com.dicegame.app;
 
+import com.dicegame.gamelib.DiceGameEngine;
+
 import java.util.Arrays;
 
 public class DiceGameApplication {
@@ -30,7 +32,9 @@ public class DiceGameApplication {
 			playerNameList[i] = new String("Player-" + (i + 1));
 		}
 		System.out.println("Names of players are " + Arrays.toString(playerNameList));
-		
-		// @TBD now start playing the game
+
+		DiceGameEngine diceGame = new DiceGameEngine(playerNameList, maxGamePoints);
+		diceGame.initPlayingSequence(true); // Shuffle the player order
+		// diceGame.playGame();
 	}
 }
