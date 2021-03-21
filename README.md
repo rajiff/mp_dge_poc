@@ -34,4 +34,14 @@ $ java -jar target/mp_dge_poc-1.0.0.jar
 $ mvn clean test
 ```
 
+### Assumptions made
+- Minimum 2 players are needed to play the game, as its called multi player game
+- Max game point cannot be zero or less
+- If a player gets bonus option, while rolling again gets a bonus another bonus is not awarded
+- If a player does not confirm the prompt to roll the dice, a turn is skipped 
+- Without completing the game, its not possible to assign a rank, however in displaying player rank after turn ends, players are ordered by their rank, however it can change in each turn, though end game's ranks are maintained well and need not be same as player rank shown at the end of last round (difficult to understand ?)
+- By default have disabled printing player scores and rank after every roll as viewing it is very misleading or confusing, however it is configurable in the code 
+- By default prompting user for rolling of dice is disabled, can be changed at code
 
+### Known issues
+- some places exception not handled, sorry

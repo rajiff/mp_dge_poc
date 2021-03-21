@@ -23,7 +23,7 @@ public class DiceGameEngine {
 	// few configs
 	boolean PRINT_SCORES_AT_EACH_PLAYER_TURN = false;
 	boolean PRINT_SCORES_AT_END_OF_ROUND = true;
-	boolean PROMPT_PLAYER_TO_ROLL = true;
+	boolean PROMPT_PLAYER_TO_ROLL = false;
 
 	public DiceGameEngine(String[] playerNames, int maxPoints) {
 		// Cannot be default, has to be provided
