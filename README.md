@@ -42,6 +42,7 @@ $ mvn clean test
 - Without completing the game, its not possible to assign a rank, however in displaying player rank after turn ends, players are ordered by their rank, however it can change in each turn, though end game's ranks are maintained well and need not be same as player rank shown at the end of last round (difficult to understand ?)
 - By default have disabled printing player scores and rank after every roll as viewing it is very misleading or confusing, however it is configurable in the code 
 - By default prompting user for rolling of dice is disabled, can be changed at code
+- When user consecutively scores 1, then a turn is skipped, however 0 is considered as score of such turn, to break the penalty cycle
 
 ### Known issues
 - some places exception not handled, sorry

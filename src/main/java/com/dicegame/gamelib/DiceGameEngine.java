@@ -151,7 +151,7 @@ public class DiceGameEngine {
 
 		if(isPenalty) {
 			score = 0;
-			System.out.println("\t[*] OOPS..! " + playerName + " must serve penalty due previous two consequtive turns, skipping rolling of dice..!");
+			System.out.println("\t[*] OOPS..! " + playerName + " must serve penalty due previous two consecutive turns, skipping rolling of dice..!");
 			// Score for this turn will be 0
 		} else {
 
