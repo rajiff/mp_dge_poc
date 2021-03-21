@@ -72,4 +72,24 @@ public class DiceGameEngineTest
 		assertEquals((MockRollingDice.nextScore*3), gameEngine.getPlayerScore("Player-01"), "Player total score must be equal to number of times dice was rolled");
 		System.out.println("Player-01 has score of " + gameEngine.getPlayerScore("Player-01"));
 	}
+	
+	@Test
+	public void testPlayerCompletsDuringTurn(){
+		// check if the player gets added to completed list of player on achieving max game points
+		
+		String[] playerNameList = {"Player-01", "Player-02"};
+		int maxPoints = 5;
+		
+		DiceGameEngine gameEngine = new DiceGameEngine(playerNameList, maxPoints);
+		
+		IRollingDice mockDice = new MockRollingDice();
+		
+		MockRollingDice.nextScore = 5; //set to 5 for player 1 to make the player complete
+		gameEngine.playPlayerTurn("Player-01", mockDice); // Player 1 should now complete
+		// assertTrue(gameEngine.hasPlayerCompleted("Player-01"), "Player must complete the game on achieving max game points");
+		
+		MockRollingDice.nextScore = 2; //set less than 5 for player 2 to make the player continue
+		gameEngine.playPlayerTurn("Player-02", mockDice); // Player 1 should now complete
+		// assertTrue( ( ! gameEngine.hasPlayerCompleted("Player-01")), "Player must continue the game if max game points not yet achieved");
+	}
 }

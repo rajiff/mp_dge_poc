@@ -16,6 +16,7 @@ public class DiceGameEngine {
 	int maxDiceFace;
 
 	LinkedHashMap<String, ArrayList<Integer>> playerScoresMap;
+	ArrayList<String> playerListByRank;
 
 	public DiceGameEngine(String[] playerNames, int maxPoints) {
 		// Cannot be default, has to be provided
@@ -31,6 +32,7 @@ public class DiceGameEngine {
 		bonusOnScore = maxDiceFace;
 
 		playerScoresMap = new LinkedHashMap<String, ArrayList<Integer>>();
+		playerListByRank = new ArrayList<String>();
 	}
 
 	// Fully set by the client
@@ -45,6 +47,7 @@ public class DiceGameEngine {
 		maxDiceFace = maxFace;
 
 		playerScoresMap = new LinkedHashMap<String, ArrayList<Integer>>();
+		playerListByRank = new ArrayList<String>();
 	}
 
 	public String[] getPlayers() {
@@ -62,6 +65,10 @@ public class DiceGameEngine {
 			score = playerScoresMap.get(playerName).stream().mapToInt(Integer::intValue).sum();
 		}
 		return score;
+	}
+	
+	public boolean hasPlayerCompleted(String playerName) {
+		return playerListByRank.contains(playerName);
 	}
 
 	public void initPlayingSequence(boolean shufflePlayerOrder) {
@@ -85,23 +92,43 @@ public class DiceGameEngine {
 		System.out.println("\n****** Game STARTING *********");
 		System.out.println("Playing order of player is " + playerList.toString() + "\n");
 
-		playNewRound(rollingDice);
+		int rounds = 0;
+		do {
+			rounds++;
+			
+			playNewRound(rollingDice);
+			
+			printplayerScores();
+			
+		} while(playerListByRank.size() != playerList.size());
+		
+		System.out.println("\n****** Game ENDED (in " + rounds + " rounds) *********\n");
+		System.out.println("Players ranks in the order they finished ");
+		for(int i=0; i < playerListByRank.size(); i++) {
+			System.out.println("\t" + playerListByRank.get(i) + " is at Rank " + (i + 1));
+		}
+		System.out.println("\n****** Bye *********\n");
 	}
 
 	public void playNewRound(IRollingDice rollingDice) {
 		System.out.println("--- New Round ---");
 
 		playerList.forEach((player) -> {
+			// check if player has already completed, if yes then skip the turn
+			// Important to skip for the uses who have completed
+			if(hasPlayerCompleted(player)) {
+				System.out.println("\tSkipping turn for " + player + " as player has completed game already");
+				return;
+			}
+			
 			// Give the turn to a player
 			playPlayerTurn(player, rollingDice);
-		});
-
-		printplayerScores();
+			
+			
+		}); // end of iterating through all players
 	}
 
 	public void playPlayerTurn(String playerName, IRollingDice rollingDice) {
-		// @TBD skip turn if penalty
-
 		// Roll the dice
 		int score = rollingDice.rollNext();
 		System.out.println("\t" + playerName + " you scored " + score + " in this turn");
@@ -115,6 +142,14 @@ public class DiceGameEngine {
 			// First time iteration, add the player to board
 			playerScoresMap.put(playerName, new ArrayList<Integer>());
 			playerScoresMap.get(playerName).add(score);
+		}
+		
+		// If player achieves max game points during this turn, add the player to completed player list to assign the rank
+		int currentScore = getPlayerScore(playerName);
+		if(currentScore >= maxGamePoints) {
+			playerListByRank.add(playerName); // should preserve the order of adding, thus the index of the player is the rank
+
+			System.out.println("\t[*] Congratulations " + playerName + " you have achieved max game points with rank of " + playerListByRank.size());
 		}
 	}
 
