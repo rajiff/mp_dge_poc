@@ -133,15 +133,22 @@ public class DiceGameEngine {
 		int score = rollingDice.rollNext();
 		System.out.println("\t" + playerName + " you scored " + score + " in this turn");
 
-		// @TBD Check if it is bonusFace, then roll one more time
+		int bonusScore = 0;
+		if(score == bonusOnScore){
+			System.out.println("\t[*] " + playerName + " you got one more chance to roll the dice ");
+			bonusScore = rollingDice.rollNext();
+			System.out.println("\t[*] " + playerName + " you scored bonus of " + bonusScore);
+		}
 
 		// Update player with new score
 		if (playerScoresMap.containsKey(playerName) ) {
 			playerScoresMap.get(playerName).add(score);
+			if(bonusScore > 0) playerScoresMap.get(playerName).add(bonusScore);
 		} else {
 			// First time iteration, add the player to board
 			playerScoresMap.put(playerName, new ArrayList<Integer>());
 			playerScoresMap.get(playerName).add(score);
+			if(bonusScore > 0) playerScoresMap.get(playerName).add(bonusScore);
 		}
 		
 		// If player achieves max game points during this turn, add the player to completed player list to assign the rank

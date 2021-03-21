@@ -86,10 +86,28 @@ public class DiceGameEngineTest
 		
 		MockRollingDice.nextScore = 5; //set to 5 for player 1 to make the player complete
 		gameEngine.playPlayerTurn("Player-01", mockDice); // Player 1 should now complete
-		// assertTrue(gameEngine.hasPlayerCompleted("Player-01"), "Player must complete the game on achieving max game points");
+		assertTrue(gameEngine.hasPlayerCompleted("Player-01"), "Player must complete the game on achieving max game points");
 		
 		MockRollingDice.nextScore = 2; //set less than 5 for player 2 to make the player continue
 		gameEngine.playPlayerTurn("Player-02", mockDice); // Player 1 should now complete
-		// assertTrue( ( ! gameEngine.hasPlayerCompleted("Player-01")), "Player must continue the game if max game points not yet achieved");
+		assertTrue( ( ! gameEngine.hasPlayerCompleted("Player-02")), "Player must continue the game if max game points not yet achieved");
+	}
+	
+	@Test
+	public void testBonusScore(){
+		String[] playerNameList = {"Player-01", "Player-02"};
+		int maxPoints = 10;
+		
+		DiceGameEngine gameEngine = new DiceGameEngine(playerNameList, maxPoints);
+		
+		IRollingDice mockDice = new MockRollingDice();
+				
+		MockRollingDice.nextScore = 6;
+		gameEngine.playPlayerTurn("Player-01", mockDice); // Player 1 should get bonus turn to roll the dice in which case score after this will be 12
+		assertEquals(12, gameEngine.getPlayerScore("Player-01"), "Player must get additional turn and points if scored a bonus");
+		
+		MockRollingDice.nextScore = 2;
+		gameEngine.playPlayerTurn("Player-02", mockDice); // Player 2 should not get any bonus, which means score will be same as the last roll of the dice
+		assertEquals(2, gameEngine.getPlayerScore("Player-02"), "Player gets only one turn if no bouns was scored");
 	}
 }
