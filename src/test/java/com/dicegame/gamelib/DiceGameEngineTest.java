@@ -60,6 +60,7 @@ public class DiceGameEngineTest
 		int maxPoints = 21;
 		
 		DiceGameEngine gameEngine = new DiceGameEngine(playerNameList, maxPoints);
+		gameEngine.disablePromptingPlayerToRoll();
 		
 		IRollingDice mockDice = new MockRollingDice();
 		MockRollingDice.nextScore = 5;
@@ -81,6 +82,7 @@ public class DiceGameEngineTest
 		int maxPoints = 5;
 		
 		DiceGameEngine gameEngine = new DiceGameEngine(playerNameList, maxPoints);
+		gameEngine.disablePromptingPlayerToRoll();
 		
 		IRollingDice mockDice = new MockRollingDice();
 		
@@ -99,6 +101,7 @@ public class DiceGameEngineTest
 		int maxPoints = 10;
 		
 		DiceGameEngine gameEngine = new DiceGameEngine(playerNameList, maxPoints);
+		gameEngine.disablePromptingPlayerToRoll();
 		
 		IRollingDice mockDice = new MockRollingDice();
 				
@@ -117,6 +120,7 @@ public class DiceGameEngineTest
 		int maxPoints = 10;
 
 		DiceGameEngine gameEngine = new DiceGameEngine(playerNameList, maxPoints);
+		gameEngine.disablePromptingPlayerToRoll();
 
 		IRollingDice mockDice = new MockRollingDice();
 

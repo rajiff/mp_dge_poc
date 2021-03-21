@@ -18,6 +18,11 @@ public class DiceGameEngine {
 	LinkedHashMap<String, ArrayList<Integer>> playerScoresMap;
 	ArrayList<String> playerListByRank;
 
+	// few configs
+	boolean PRINT_SCORES_AT_EACH_PLAYER_TURN = false;
+	boolean PRINT_SCORES_AT_END_OF_ROUND = true;
+	boolean PROMPT_PLAYER_TO_ROLL = true;
+
 	public DiceGameEngine(String[] playerNames, int maxPoints) {
 		// Cannot be default, has to be provided
 		playerList = new ArrayList<String>(Arrays.asList(playerNames));
@@ -66,7 +71,7 @@ public class DiceGameEngine {
 		}
 		return score;
 	}
-	
+
 	public boolean hasPlayerCompleted(String playerName) {
 		return playerListByRank.contains(playerName);
 	}
@@ -79,6 +84,10 @@ public class DiceGameEngine {
 
 	public void initPlayingSequence() {
 		initPlayingSequence(true); // by default too shuffle the players
+	}
+	
+	public void disablePromptingPlayerToRoll() {
+		PROMPT_PLAYER_TO_ROLL = false;
 	}
 
 	public void playGame() {
@@ -95,13 +104,13 @@ public class DiceGameEngine {
 		int rounds = 0;
 		do {
 			rounds++;
-			
+
 			playNewRound(rollingDice);
-			
-			printplayerScores();
-			
+
+			if(PRINT_SCORES_AT_END_OF_ROUND) printplayerScores();
+
 		} while(playerListByRank.size() != playerList.size());
-		
+
 		System.out.println("\n****** Game ENDED (in " + rounds + " rounds) *********\n");
 		System.out.println("Players ranks in the order they finished ");
 		for(int i=0; i < playerListByRank.size(); i++) {
@@ -120,11 +129,11 @@ public class DiceGameEngine {
 				System.out.println("\tSkipping turn for " + player + " as player has completed game already");
 				return;
 			}
-			
+
 			// Give the turn to a player
 			playPlayerTurn(player, rollingDice);
-			
-			
+
+			if(PRINT_SCORES_AT_EACH_PLAYER_TURN) printplayerScores();
 		}); // end of iterating through all players
 	}
 
@@ -132,24 +141,27 @@ public class DiceGameEngine {
 		// Check if player has to serve penalty
 		boolean isPenalty = hasPenaltyForPlayer(playerName);
 		int score = 0;
-		
+
 		if(isPenalty) {
 			score = 0;
 			System.out.println("\t[*] OOPS..! " + playerName + " must serve penalty due previous two consequtive turns, skipping rolling of dice..!");
-			// Score for this turn will be 0 
+			// Score for this turn will be 0
 		} else {
-			// Prompt to roll the dice
-			// ASSUMING if user does not confirm, player wants to skip the turn, but stays in the game
-			// if( ! isPlayerConfirmRollingDice(playerName)) {
-			// 	System.out.println(playerName + " you skipped your turn");
-			// 	return;
-			// }
 
-			// If confirms to roll, then role it, else skip the turn
-		
-			// Roll the dice
-			score = rollingDice.rollNext();
-			System.out.println("\t" + playerName + " you scored " + score + " in this turn");
+			boolean confirmRoll = false;
+			if(PROMPT_PLAYER_TO_ROLL) {
+				confirmRoll = isPlayerConfirmRollingDice(playerName);
+			} else {
+				confirmRoll = true; // if we are not prompting, it as good as confirmed
+			}
+
+			if(confirmRoll) {
+				// Roll the dice
+				score = rollingDice.rollNext();
+				System.out.println("\t" + playerName + " you scored " + score + " in this turn");
+			} else {
+				System.out.println("\t" + playerName + " chose to skip the turn ");
+			}
 		}
 
 		int bonusScore = 0;
@@ -169,7 +181,7 @@ public class DiceGameEngine {
 			playerScoresMap.get(playerName).add(score);
 			if(bonusScore > 0) playerScoresMap.get(playerName).add(bonusScore);
 		}
-		
+
 		// If player achieves max game points during this turn, add the player to completed player list to assign the rank
 		int currentScore = getPlayerScore(playerName);
 		if(currentScore >= maxGamePoints) {
@@ -178,10 +190,10 @@ public class DiceGameEngine {
 			System.out.println("\t[*] Congratulations " + playerName + " you have achieved max game points with rank of " + playerListByRank.size());
 		}
 	}
-	
+
 	public boolean hasPenaltyForPlayer(String playerName) {
 		boolean hasPenalty = false;
-		
+
 		if ( ! playerScoresMap.containsKey(playerName) ) {
 			// Still player has not played any turns
 			hasPenalty = false;
@@ -190,14 +202,14 @@ public class DiceGameEngine {
 				// its not possible to check if player has not played at least 2 turns or rounds
 				int prevScore = playerScoresMap.get(playerName).get(playerScoresMap.get(playerName).size() - 1);
 				int lastPrevScore = playerScoresMap.get(playerName).get(playerScoresMap.get(playerName).size() - 2);
-				
+
 				// System.out.println(playerName + " has scores from last two rounds as " + prevScore + "," + lastPrevScore);
-				
+
 				if(prevScore == penaltyOnScore && lastPrevScore == penaltyOnScore) {
 					hasPenalty = true;
 				}
 			} else {
-				// not enough turns yet 
+				// not enough turns yet
 				hasPenalty = false;
 			}
 		}
@@ -215,5 +227,14 @@ public class DiceGameEngine {
 		});
 
 		System.out.println("========");
+	}
+
+	boolean isPlayerConfirmRollingDice(String playerName) {
+		String keyIn = System.console().readLine(playerName + " its your turn (press 'r' to roll the dice, any other key to skip) : ");
+
+		keyIn.toLowerCase();
+		char key = keyIn.charAt(0);
+
+		return (key == 'r');
 	}
 }
