@@ -1,0 +1,163 @@
+$ java -jar target/mp_dge_poc-1.0.0.jar 6 21
+=========== Welcome to Multi player Dice Game ===========
+Game will srat with 6 players, playing for 21 points
+Names of players are [Player-1, Player-2, Player-3, Player-4, Player-5, Player-6]
+
+****** Game STARTING *********
+Playing order of player is [Player-6, Player-1, Player-4, Player-2, Player-5, Player-3]
+
+--- New Round ---
+	Player-6 you scored 3 in this turn
+	Player-1 you scored 6 in this turn
+	[*] Player-1 you got one more chance to roll the dice 
+	[*] Player-1 you scored bonus of 5
+	Player-4 you scored 2 in this turn
+	Player-2 you scored 4 in this turn
+	Player-5 you scored 6 in this turn
+	[*] Player-5 you got one more chance to roll the dice 
+	[*] Player-5 you scored bonus of 5
+	Player-3 you scored 2 in this turn
+==== Player scores ====
+Player-1 scored :- 11 [6,5]
+Player-5 scored :- 11 [6,5]
+Player-2 scored :- 4 [4]
+Player-6 scored :- 3 [3]
+Player-4 scored :- 2 [2]
+Player-3 scored :- 2 [2]
+========
+--- New Round ---
+	Player-6 you scored 3 in this turn
+	Player-1 you scored 1 in this turn
+	Player-4 you scored 5 in this turn
+	Player-2 you scored 3 in this turn
+	Player-5 you scored 1 in this turn
+	Player-3 you scored 6 in this turn
+	[*] Player-3 you got one more chance to roll the dice 
+	[*] Player-3 you scored bonus of 5
+==== Player scores ====
+Player-3 scored :- 13 [2,6,5]
+Player-1 scored :- 12 [6,5,1]
+Player-5 scored :- 12 [6,5,1]
+Player-2 scored :- 7 [4,3]
+Player-4 scored :- 7 [2,5]
+Player-6 scored :- 6 [3,3]
+========
+--- New Round ---
+	Player-6 you scored 1 in this turn
+	Player-1 you scored 2 in this turn
+	Player-4 you scored 4 in this turn
+	Player-2 you scored 5 in this turn
+	Player-5 you scored 1 in this turn
+	Player-3 you scored 2 in this turn
+==== Player scores ====
+Player-3 scored :- 15 [2,6,5,2]
+Player-1 scored :- 14 [6,5,1,2]
+Player-5 scored :- 13 [6,5,1,1]
+Player-2 scored :- 12 [4,3,5]
+Player-4 scored :- 11 [2,5,4]
+Player-6 scored :- 7 [3,3,1]
+========
+--- New Round ---
+	Player-6 you scored 5 in this turn
+	Player-1 you scored 4 in this turn
+	Player-4 you scored 2 in this turn
+	Player-2 you scored 1 in this turn
+	[*] OOPS..! Player-5 must serve penalty due previous two consecutive turns, skipping rolling of dice..!
+	Player-3 you scored 6 in this turn
+	[*] Player-3 you got one more chance to roll the dice 
+	[*] Player-3 you scored bonus of 3
+	[*] Congratulations Player-3 you have achieved max game points with rank of 1
+==== Player scores ====
+Player-3 scored :- 24 [2,6,5,2,6,3]
+Player-1 scored :- 18 [6,5,1,2,4]
+Player-5 scored :- 13 [6,5,1,1,0]
+Player-2 scored :- 13 [4,3,5,1]
+Player-4 scored :- 13 [2,5,4,2]
+Player-6 scored :- 12 [3,3,1,5]
+========
+--- New Round ---
+	Player-6 you scored 4 in this turn
+	Player-1 you scored 6 in this turn
+	[*] Player-1 you got one more chance to roll the dice 
+	[*] Player-1 you scored bonus of 5
+	[*] Congratulations Player-1 you have achieved max game points with rank of 2
+	Player-4 you scored 4 in this turn
+	Player-2 you scored 6 in this turn
+	[*] Player-2 you got one more chance to roll the dice 
+	[*] Player-2 you scored bonus of 1
+	Player-5 you scored 3 in this turn
+	Skipping turn for Player-3 as player has completed game already
+==== Player scores ====
+Player-1 scored :- 29 [6,5,1,2,4,6,5]
+Player-3 scored :- 24 [2,6,5,2,6,3]
+Player-2 scored :- 20 [4,3,5,1,6,1]
+Player-4 scored :- 17 [2,5,4,2,4]
+Player-5 scored :- 16 [6,5,1,1,0,3]
+Player-6 scored :- 16 [3,3,1,5,4]
+========
+--- New Round ---
+	Player-6 you scored 4 in this turn
+	Skipping turn for Player-1 as player has completed game already
+	Player-4 you scored 6 in this turn
+	[*] Player-4 you got one more chance to roll the dice 
+	[*] Player-4 you scored bonus of 5
+	[*] Congratulations Player-4 you have achieved max game points with rank of 3
+	Player-2 you scored 2 in this turn
+	[*] Congratulations Player-2 you have achieved max game points with rank of 4
+	Player-5 you scored 3 in this turn
+	Skipping turn for Player-3 as player has completed game already
+==== Player scores ====
+Player-1 scored :- 29 [6,5,1,2,4,6,5]
+Player-4 scored :- 28 [2,5,4,2,4,6,5]
+Player-3 scored :- 24 [2,6,5,2,6,3]
+Player-2 scored :- 22 [4,3,5,1,6,1,2]
+Player-6 scored :- 20 [3,3,1,5,4,4]
+Player-5 scored :- 19 [6,5,1,1,0,3,3]
+========
+--- New Round ---
+	Player-6 you scored 5 in this turn
+	[*] Congratulations Player-6 you have achieved max game points with rank of 5
+	Skipping turn for Player-1 as player has completed game already
+	Skipping turn for Player-4 as player has completed game already
+	Skipping turn for Player-2 as player has completed game already
+	Player-5 you scored 1 in this turn
+	Skipping turn for Player-3 as player has completed game already
+==== Player scores ====
+Player-1 scored :- 29 [6,5,1,2,4,6,5]
+Player-4 scored :- 28 [2,5,4,2,4,6,5]
+Player-6 scored :- 25 [3,3,1,5,4,4,5]
+Player-3 scored :- 24 [2,6,5,2,6,3]
+Player-2 scored :- 22 [4,3,5,1,6,1,2]
+Player-5 scored :- 20 [6,5,1,1,0,3,3,1]
+========
+--- New Round ---
+	Skipping turn for Player-6 as player has completed game already
+	Skipping turn for Player-1 as player has completed game already
+	Skipping turn for Player-4 as player has completed game already
+	Skipping turn for Player-2 as player has completed game already
+	Player-5 you scored 6 in this turn
+	[*] Player-5 you got one more chance to roll the dice 
+	[*] Player-5 you scored bonus of 5
+	[*] Congratulations Player-5 you have achieved max game points with rank of 6
+	Skipping turn for Player-3 as player has completed game already
+==== Player scores ====
+Player-5 scored :- 31 [6,5,1,1,0,3,3,1,6,5]
+Player-1 scored :- 29 [6,5,1,2,4,6,5]
+Player-4 scored :- 28 [2,5,4,2,4,6,5]
+Player-6 scored :- 25 [3,3,1,5,4,4,5]
+Player-3 scored :- 24 [2,6,5,2,6,3]
+Player-2 scored :- 22 [4,3,5,1,6,1,2]
+========
+
+****** Game ENDED (in 8 rounds) *********
+
+Players ranks in the order they finished 
+	Player-3 is at Rank 1
+	Player-1 is at Rank 2
+	Player-4 is at Rank 3
+	Player-2 is at Rank 4
+	Player-6 is at Rank 5
+	Player-5 is at Rank 6
+
+****** Bye *********
+
