@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.Comparator;
 
 public class DiceGameEngine {
 	// It is a list, it should maintain order players, unless changed explicitly
@@ -85,7 +87,7 @@ public class DiceGameEngine {
 	public void initPlayingSequence() {
 		initPlayingSequence(true); // by default too shuffle the players
 	}
-	
+
 	public void disablePromptingPlayerToRoll() {
 		PROMPT_PLAYER_TO_ROLL = false;
 	}
@@ -102,6 +104,8 @@ public class DiceGameEngine {
 		System.out.println("Playing order of player is " + playerList.toString() + "\n");
 
 		int rounds = 0;
+
+		// Only role of this loop is to decide when to end the game, until then keeps playing rounds
 		do {
 			rounds++;
 
@@ -109,7 +113,7 @@ public class DiceGameEngine {
 
 			if(PRINT_SCORES_AT_END_OF_ROUND) printplayerScores();
 
-		} while(playerListByRank.size() != playerList.size());
+		} while(playerListByRank.size() != playerList.size()); // this check is bit volunurable, could be improved
 
 		System.out.println("\n****** Game ENDED (in " + rounds + " rounds) *********\n");
 		System.out.println("Players ranks in the order they finished ");
@@ -138,9 +142,12 @@ public class DiceGameEngine {
 	}
 
 	public void playPlayerTurn(String playerName, IRollingDice rollingDice) {
+		// Encapsulates most logic and most happening part of the game
+
+		int score = 0;
+
 		// Check if player has to serve penalty
 		boolean isPenalty = hasPenaltyForPlayer(playerName);
-		int score = 0;
 
 		if(isPenalty) {
 			score = 0;
@@ -217,7 +224,9 @@ public class DiceGameEngine {
 	}
 
 	void printplayerScores() {
-		// @TBD sort them to get the leader board
+		// Sorting to make the player list look arranged by rank, but actually it is misleading, especially if a later player gats score higher than previously completed player
+		sortPlayerScores();
+
 		System.out.println("==== Player scores ====");
 
 		playerScoresMap.forEach((player, scores) -> {
@@ -236,5 +245,30 @@ public class DiceGameEngine {
 		char key = keyIn.charAt(0);
 
 		return (key == 'r');
+	}
+
+	void sortPlayerScores() {
+		ArrayList<Map.Entry<String, ArrayList<Integer>>> playerList = new ArrayList<Map.Entry<String, ArrayList<Integer>>>();
+		for(Map.Entry<String, ArrayList<Integer>> entry: playerScoresMap.entrySet()) {
+       playerList.add(entry);
+		}
+
+		Comparator<Map.Entry<String, ArrayList<Integer>>> scoreComparator = new Comparator<Map.Entry<String, ArrayList<Integer>>>() {
+      @Override
+      public int compare(Map.Entry<String, ArrayList<Integer>> elem1, Map.Entry<String, ArrayList<Integer>> elem2) {
+          Integer sc1 = elem1.getValue().stream().mapToInt(Integer::intValue).sum();
+          Integer sc2 = elem2.getValue().stream().mapToInt(Integer::intValue).sum();
+
+          return sc1.compareTo(sc2);
+      }
+    };
+    Collections.sort(playerList, Collections.reverseOrder(scoreComparator));
+
+		// Flush out unsorted data
+    playerScoresMap.clear();
+
+    for(Map.Entry<String, ArrayList<Integer>> entry: playerList) {
+			playerScoresMap.put(entry.getKey(), entry.getValue());
+		}
 	}
 }

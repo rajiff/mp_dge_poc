@@ -13,6 +13,12 @@ You can also only compile not build using below command to check code is in stat
 $ mvn clearn compile
 ```
 
+if `mvn clean package` fails due to test cases failure try below command, which disables test cases, it should still allow you to run the application without harm, rest of the steps will be same
+
+```unix
+$ mvn clean package -DskipTests=true
+```
+
 2. Verify jar file is getting created by verifying the results from below command
 ```unix
 $ ls -l ./target/
