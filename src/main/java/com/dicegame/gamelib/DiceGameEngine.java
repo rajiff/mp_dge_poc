@@ -21,9 +21,9 @@ public class DiceGameEngine {
 	ArrayList<String> playerListByRank;
 
 	// few configs
-	boolean PRINT_SCORES_AT_EACH_PLAYER_TURN = false;
-	boolean PRINT_SCORES_AT_END_OF_ROUND = true;
-	boolean PROMPT_PLAYER_TO_ROLL = false;
+	boolean PRINT_SCORES_AT_EACH_PLAYER_TURN = Boolean.parseBoolean(System.getProperty("PRINT_SCORES_AT_EACH_PLAYER_TURN")) ? Boolean.parseBoolean(System.getProperty("PRINT_SCORES_AT_EACH_PLAYER_TURN")) : false;
+	boolean PRINT_SCORES_AT_END_OF_ROUND = Boolean.parseBoolean(System.getProperty("PRINT_SCORES_AT_END_OF_ROUND")) ? Boolean.parseBoolean(System.getProperty("PRINT_SCORES_AT_END_OF_ROUND")) : true;
+	boolean PROMPT_PLAYER_TO_ROLL = Boolean.parseBoolean(System.getProperty("PROMPT_PLAYER_TO_ROLL")) ? Boolean.parseBoolean(System.getProperty("PROMPT_PLAYER_TO_ROLL")) : false;
 
 	public DiceGameEngine(String[] playerNames, int maxPoints) {
 		// Cannot be default, has to be provided

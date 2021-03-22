@@ -29,6 +29,24 @@ $ ls -l ./target/
 $ java -jar target/mp_dge_poc-1.0.0.jar
 ```
 
+**How to pass system properties**
+There are few properties by setting which you can change the way program behaves without changing code or compiling again, below are the properties which you can override
+
+- Make application prompt user before rolling, by setting property PROMPT_PLAYER_TO_ROLL to true, as shown below
+```unix
+$ java -jar -DPROMPT_PLAYER_TO_ROLL=true target/mp_dge_poc-1.0.0.jar 6 21
+```
+
+- Make application display scores at end of each round user, by setting property PRINT_SCORES_AT_END_OF_ROUND to true, as shown below
+```unix
+$ java -jar -DPRINT_SCORES_AT_END_OF_ROUND=true target/mp_dge_poc-1.0.0.jar 6 21
+```
+
+- Make application display scores on each time player rolls dice, by setting property PRINT_SCORES_AT_EACH_PLAYER_TURN to true, as shown below
+```unix
+$ java -jar -DPRINT_SCORES_AT_EACH_PLAYER_TURN=true target/mp_dge_poc-1.0.0.jar 6 21
+```
+
 4. Run test cases
 ```unix
 $ mvn clean test
