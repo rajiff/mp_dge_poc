@@ -38,7 +38,7 @@ public class RollingDice implements IRollingDice {
 		
 		do {
 			// Gives randome between origin (inclusive) and bound (exclusive).
-			newRandom = ThreadLocalRandom.current().nextInt(minFace, (maxFace + 1)); // bound is set to 1 point above to get even max value of dice
+			newRandom = ThreadLocalRandom.current().nextInt(minFace, maxFace + 1); // bound is set to 1 point above to get even max value of dice
 		} while( prevRandom == newRandom || prevRandom2 == newRandom); // do it again, if generated same as immediate two previous randoms
 		
 		prevRandom2 = prevRandom;

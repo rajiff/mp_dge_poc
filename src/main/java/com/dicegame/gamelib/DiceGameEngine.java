@@ -241,10 +241,11 @@ public class DiceGameEngine {
 	boolean isPlayerConfirmRollingDice(String playerName) {
 		String keyIn = System.console().readLine(playerName + " its your turn (press 'r' to roll the dice, any other key to skip) : ");
 
-		keyIn.toLowerCase();
+		keyIn = keyIn.toLowerCase();
 		char key = keyIn.charAt(0);
 
-		return (key == 'r');
+		boolean isConfirm = key == 'r';
+		return isConfirm;
 	}
 
 	void sortPlayerScores() {
