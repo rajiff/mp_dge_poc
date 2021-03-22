@@ -1,3 +1,6 @@
+© Copyright : Basavaraj K N
+Originally available here : https://github.com/rajiff/mp_dge_poc/blob/main/system.md
+
 # System Design for Web Version of Multiplayer Dice Game
 **Objective**: Help understand challenges of a Multi player Dice Game over web and identify possible solution options
 
@@ -86,3 +89,12 @@ Below explain each model's usage or importance
 - Admin users of the system would need a interface to observe number of Games currently in running state, aborted or dangling state
 - Using the pub/sub channels we can create a special web socket client for Admin console interface, which subscribes or reads messages from all pub/sub channels and logically renders the Game Tables currently active, waiting etc., 
 - Admin uses can select a specific table to view the details of the same, such further drill down details of a table can be fulfilled using REST API calls, to avoid stressing websocket communications 
+
+### Other issues, which are not addressed
+- Integration with payment gateway : For future monetization purpose which can be made as a one more service which backend integrates with internally
+- Authorization : Assumed to be handled as regularly using an RBAC solution
+- Logging, tracing : Logging traffic, requests, errors for instrumentation & trouble shooting purposes of the game
+- Any other tech selection
+
+© Copyright : Basavaraj K N
+Originally available here : https://github.com/rajiff/mp_dge_poc/blob/main/system.md
