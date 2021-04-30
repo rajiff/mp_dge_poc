@@ -35,11 +35,13 @@ public class DiceGameApplication {
 			System.out.println("Names of players are " + Arrays.toString(playerNameList));
 
 			DiceGameEngine diceGame = new DiceGameEngine(playerNameList, maxGamePoints);
-		diceGame.initPlayingSequence(true); // Shuffle the player order
-		diceGame.playGame();
-	} cath (Exception ex) {
-		System.out.println("An exception occurred ", ex);
-		System.out.println("= End of Application =");
+			
+			diceGame.initPlayingSequence(true); // Shuffle the player order
+			diceGame.playGame();
+		} catch (Exception ex) {
+			System.out.println("An exception occurred " + ex.toString());
+		} finally {
+			System.out.println("= End of Application =");
+		}
 	}
-}
 }
