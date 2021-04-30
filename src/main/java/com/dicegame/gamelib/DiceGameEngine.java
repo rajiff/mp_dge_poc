@@ -16,6 +16,7 @@ public class DiceGameEngine {
 	int bonusOnScore;
 	int minDiceFace;
 	int maxDiceFace;
+	int bonus3RollTotalScore;
 
 	LinkedHashMap<String, ArrayList<Integer>> playerScoresMap;
 	ArrayList<String> playerListByRank;
@@ -33,6 +34,8 @@ public class DiceGameEngine {
 		// Usually Dice is 6 faced
 		minDiceFace = 1;
 		maxDiceFace = 6;
+		
+		bonus3RollTotalScore = 10; // award bonus when last 3 rolls reach this total
 
 		// by default penalty for scoring minimum possible, bonus for scoring max possible
 		penaltyOnScore = minDiceFace;
@@ -173,7 +176,7 @@ public class DiceGameEngine {
 
 		int bonusScore = 0;
 		if(score == bonusOnScore){
-			System.out.println("\t[*] " + playerName + " you got one more chance to roll the dice ");
+			System.out.println("\t[*] " + playerName + " you got one more chance to roll the dice as you got BONUS FACE VALUE " + bonusOnScore);
 			bonusScore = rollingDice.rollNext();
 			System.out.println("\t[*] " + playerName + " you scored bonus of " + bonusScore);
 		}
@@ -187,6 +190,23 @@ public class DiceGameEngine {
 			playerScoresMap.put(playerName, new ArrayList<Integer>());
 			playerScoresMap.get(playerName).add(score);
 			if(bonusScore > 0) playerScoresMap.get(playerName).add(bonusScore);
+		}
+		
+		// One more bonus check
+		if(playerScoresMap.get(playerName).size() >= 3) {
+			// minimum 3 rolls have happened, hence qualifies for additional bonus 
+			int nbrOfRolls = playerScoresMap.get(playerName).size();
+			// Check if last 3 rolls produce total >= 10
+			Integer last3RollSum = playerScoresMap.get(playerName).get(nbrOfRolls - 1);
+			last3RollSum += playerScoresMap.get(playerName).get(nbrOfRolls - 2);
+			last3RollSum += playerScoresMap.get(playerName).get(nbrOfRolls - 3);
+			
+			if(last3RollSum == bonus3RollTotalScore) {
+				System.out.println("\t[*] " + playerName + " you got one more chance to roll as your last ** 3 ** rolls got you Bonus because it is >= " + bonus3RollTotalScore);
+				int newRollScore = rollingDice.rollNext();
+				System.out.println("\t[*] " + playerName + " you scored bonus of " + newRollScore);
+				playerScoresMap.get(playerName).add(newRollScore);
+			}
 		}
 
 		// If player achieves max game points during this turn, add the player to completed player list to assign the rank
